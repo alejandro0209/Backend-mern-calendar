@@ -99,14 +99,15 @@ const revalidateToken = async(req, res = response) => {
 
     const { name } = req.body;
     const { uid } = req;
+    const user = await User.findOne( { uid });
     
     //generar Nuevo JWT  y retornarlo en esta petición.
-    const token =  await generateJWT( uid,  name);
+    const token =  await generateJWT( uid,  user.name);
 
     res.json({
         ok: true,
         uid,
-        name,
+        name: user.name,
         token,
         
     })
