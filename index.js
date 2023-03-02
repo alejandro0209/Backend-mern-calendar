@@ -24,8 +24,12 @@ app.use( express.json() );
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
 
-app.get('*', (req,res)) => {
-        res.sendFile( __dirname + '/public/index.html');
+const path = require('path'); // Esto al principio, junto al resto de importaciones
+ 
+app.use(express.static(path.join(__dirname, 'public')));
+ 
+app.get('/*', function(req,res) {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 //TODO CRUD: Eventos
 
